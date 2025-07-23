@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/jassy_hw/',
+  base: '/',
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: 1000, // Suppress chunk size warnings
