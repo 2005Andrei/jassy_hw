@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   WebGLRenderer,
-  Scene,
+  Scene as ThreeScene, // Alias Scene from three as ThreeScene
   Color,
   FogExp2,
   PerspectiveCamera,
@@ -36,7 +36,7 @@ const Scene = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const scene = new Scene();
+    const scene = new ThreeScene(); // Use aliased ThreeScene
     scene.background = new Color(0x000);
     scene.fog = new FogExp2(0x000, 0.08);
 
@@ -57,12 +57,12 @@ const Scene = () => {
       wheelSensitivity: 0.01,
       touchSensitivity: 0.01,
       momentumMultiplier: 2.5,
-      smoothing: 0.2, // Increased from 0.1 for snappier slide movement
-      slideLerp: 0.15, // Increased from 0.075 for faster slide positioning
-      distortionDecay: 0.95, // Slightly increased from 0.93 for quicker distortion fade
+      smoothing: 0.2,
+      slideLerp: 0.15,
+      distortionDecay: 0.95,
       maxDistortion: 4.0,
       distortionSensitivity: 0.25,
-      distortionSmoothing: 0.15, // Increased from 0.075 for more responsive distortion
+      distortionSmoothing: 0.15,
       rotationFactor: 0.2,
       animationSpeed: 0.5,
       textFadeStart: 1.6,
@@ -75,8 +75,8 @@ const Scene = () => {
       waveAmplitudeBoost: 0.2,
       directionChangeThreshold: 0.02,
       directionSmoothing: 0.03,
-      hoverLerpSpeed: 0.3, // Increased from 0.1 for faster hover transitions (~0.1-0.2s)
-      hoverCursorDelay: 1000, // 1 second delay for cursor change
+      hoverLerpSpeed: 0.3,
+      hoverCursorDelay: 1000,
     };
 
     // Slide setup
@@ -207,8 +207,8 @@ const Scene = () => {
     let accumulatedMovement = 0;
     let mouseDownTime = 0;
     let mouseDownPos = { x: 0, y: 0 };
-    const clickThreshold = 5; // Pixels moved to consider a drag instead of a click
-    const clickTimeThreshold = 300; // Milliseconds for click duration
+    const clickThreshold = 5;
+    const clickTimeThreshold = 300;
 
     const raycaster = new Raycaster();
     const mouse = new Vector2();
@@ -549,7 +549,6 @@ const Scene = () => {
       const adaptiveDistortionSmoothing = settings.distortionSmoothing * (distortionDelta < 0.05 ? 0.5 : 1.0);
       currentDistortionFactor += (targetDistortionFactor - currentDistortionFactor) * adaptiveDistortionSmoothing;
 
-      // Smooth hover transitions
       slides.forEach((slide) => {
         slide.userData.currentScale += (slide.userData.targetScale - slide.userData.currentScale) * settings.hoverLerpSpeed;
         slide.scale.set(slide.userData.currentScale, slide.userData.currentScale, slide.userData.currentScale);
@@ -557,7 +556,6 @@ const Scene = () => {
         slide.material.emissiveIntensity = slide.userData.currentEmissiveIntensity;
       });
 
-      // Update point light intensity based on hovered slide
       if (hoveredSlide) {
         pointLight.intensity = hoveredSlide.userData.baseLightIntensity * (1.0 + 0.5 * (hoveredSlide.userData.currentScale - 1.0) / 0.1);
       } else {
@@ -599,7 +597,7 @@ const Scene = () => {
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('keydown', handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown);
       window.removeEventListener('resize', handleResize);
       titlesContainer.innerHTML = '';
     };
