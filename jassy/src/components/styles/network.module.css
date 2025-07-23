@@ -1,0 +1,470 @@
+.nas-header {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: -2px;
+}
+
+.nas-logo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--nas-primary-color);
+  letter-spacing: 0.5px;
+}
+
+.nas-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nas-button,
+.nas-select {
+  background: linear-gradient(to bottom, var(--nas-panel-bg), #222222);
+  border: 1px solid var(--nas-primary-color);
+  color: var(--nas-text-color);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.nas-button:hover,
+.nas-select:hover {
+  background: var(--nas-primary-color);
+  color: var(--nas-bg-color);
+  box-shadow: 0 0 8px rgba(255, 230, 0, 0.4);
+}
+
+.nas-button:disabled,
+.nas-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nas-panel {
+  background: var(--nas-panel-bg);
+  border: 1px solid var(--nas-border-color);
+  border-radius: 8px;
+  padding: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.nas-panel-title {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--nas-border-color);
+  color: var(--nas-primary-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.nas-console-title {
+  margin: 12px 0 8px;
+  color: var(--nas-primary-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.nas-network-traffic,
+.nas-scrollable-content {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  font-size: 0.9rem;
+  scrollbar-color: var(--nas-primary-color) var(--nas-panel-bg);
+  scrollbar-width: thin;
+}
+
+.nas-network-traffic::-webkit-scrollbar,
+.nas-scrollable-content::-webkit-scrollbar,
+#nas-packet-details::-webkit-scrollbar {
+  width: 8px;
+}
+
+.nas-network-traffic::-webkit-scrollbar-track,
+.nas-scrollable-content::-webkit-scrollbar-track, #nas-packet-details::-webkit-scrollbar {
+  background: var(--nas-panel-bg);
+}
+
+.nas-network-traffic::-webkit-scrollbar-thumb,
+.nas-scrollable-content::-webkit-scrollbar-thumb,#nas-packet-details::-webkit-scrollbar {
+  background: var(--nas-primary-color);
+  border-radius: 4px;
+}
+
+.nas-packet {
+  margin-bottom: 8px;
+  padding: 10px;
+  border-left: 4px solid var(--nas-primary-color);
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  border-radius: 4px;
+}
+
+.nas-packet:hover {
+  background: rgba(255, 230, 0, 0.1);
+}
+
+.nas-http { border-left-color: #268bd2; }
+.nas-ftp { border-left-color: #f7ca18; }
+.nas-dns { border-left-color: #2ecc71; }
+.nas-ssh { border-left-color: var(--nas-secondary-color); }
+.nas-highlight {
+  background: rgba(255, 230, 0, 0.2);
+}
+
+.nas-time,
+.nas-direction,
+.nas-protocol {
+  margin-right: 10px;
+}
+
+@keyframes nas-pulse {
+  0%, 100% { background: rgba(255, 230, 0, 0.2); }
+  50% { background: rgba(255, 230, 0, 0.4); }
+}
+
+.nas-packet-details {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+
+.nas-hex-view {
+  font-family: 'Roboto Mono', monospace;
+  white-space: pre;
+  line-height: 1.5;
+}
+
+.nas-hex-row {
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.nas-hex-offset {
+  color: #aaaaaa;
+  margin-right: 20px;
+  width: 50px;
+}
+
+.nas-hex-data {
+  letter-spacing: 1px;
+  color: var(--nas-text-color);
+}
+
+.nas-hex-ascii {
+  margin-left: 25px;
+  color: #aaaaaa;
+}
+
+.nas-alert-box {
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(187, 154, 247, 0.1);
+  border-left: 4px solid var(--nas-secondary-color);
+  border-radius: 4px;
+}
+
+.nas-network-visualization {
+  height: 300px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.nas-network-canvas {
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+}
+
+.nas-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--nas-primary-color);
+  box-shadow: 0 0 12px var(--nas-primary-color);
+  animation: nas-scan 4s linear infinite;
+}
+
+@keyframes nas-scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.nas-attack-console {
+  padding: 0;
+}
+
+.nas-console-output {
+  min-height: 100px;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.nas-console-line {
+  margin: 5px 0;
+  transition: background 0.3s ease-in-out;
+}
+
+.nas-info { color: #268bd2; }
+.nas-warning { color: #f7ca18; }
+.nas-error { color: var(--nas-secondary-color); font-weight: 600; }
+.nas-success {
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.1);
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.nas-command-wrapper {
+  position: relative;
+  margin-top: 10px;
+}
+
+.nas-command-input {
+  width: 100%;
+  background: var(--nas-panel-bg);
+  border: 1px solid var(--nas-primary-color);
+  color: var(--nas-text-color);
+  font-family: 'Roboto Mono', monospace;
+  padding: 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nas-command-input:focus {
+  border-color: var(--nas-primary-color);
+  box-shadow: 0 0 8px rgba(255, 230, 0, 0.4);
+}
+
+.nas-command-input:disabled {
+  opacity: 0.5;
+}
+
+.nas-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--nas-panel-bg);
+  border: 1px solid var(--nas-primary-color);
+  border-radius: 6px;
+  list-style: none;
+  padding: 5px 0;
+  margin: 5px 0 0;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+}
+
+.nas-suggestions.nas-active {
+  display: block;
+}
+
+.nas-suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--nas-text-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.nas-suggestion-item:hover {
+  background: var(--nas-primary-color);
+  color: var(--nas-bg-color);
+}
+
+.nas-tutorial-step {
+  margin-bottom: 12px;
+  padding: 12px;
+  border-left: 4px solid var(--nas-border-color);
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nas-tutorial-step.nas-active {
+  border-left-color: var(--nas-primary-color);
+  background: rgba(255, 230, 0, 0.05);
+}
+
+.nas-tutorial-step.nas-completed {
+  border-left-color: #268bd2;
+  background: rgba(38, 139, 210, 0.05);
+}
+
+.nas-tutorial-step.nas-completed::before {
+  content: '✔';
+  color: #268bd2;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.nas-tutorial-step h4 {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.nas-step-number {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: var(--nas-primary-color);
+  color: var(--nas-bg-color);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.nas-tutorial-step ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.nas-tutorial-step li {
+  margin-bottom: 8px;
+}
+
+.nas-protocol-info {
+  background: rgba(0, 0, 20, 0.5);
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.nas-protocol-info strong {
+  color: var(--nas-primary-color);
+}
+
+.nas-tooltip {
+  position: relative;
+  border-bottom: 1px dotted var(--nas-text-color);
+  cursor: help;
+}
+
+.nas-tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background: var(--nas-panel-bg);
+  color: var(--nas-text-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.nas-tooltip:hover .nas-tooltip-text {
+  visibility: visible;
+}
+
+.nas-progress {
+  color: var(--nas-primary-color);
+  font-weight: 500;
+}
+
+.nas-progress.nas-complete {
+  color: #268bd2;
+}
+
+.nas-achievement {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8) !important;
+  background: var(--nas-panel-bg);
+  border: 2px solid var(--nas-primary-color);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  z-index: 100;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 230, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nas-achievement.nas-show {
+  animation: nas-achievementFade 4s ease-in-out forwards;
+}
+
+@keyframes nas-achievementFade {
+  0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -60%) scale(0.8); }
+}
+
+.nas-achievement h3 {
+  color: var(--nas-primary-color);
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+.nas-achievement p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+#nas-confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nas-liquid-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: 
+    blur(3px) 
+    saturate(1.165) 
+    contrast(1.12);
+  -webkit-backdrop-filter: 
+    blur(3px) 
+    saturate(1.165) 
+    contrast(1.12);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.nas-liquid-glass::before {
+  content: '';
+  inset: -20%;
+  background: radial-gradient(
+    ellipse 150% 150% at 50% 50%,
+    rgba(0, 22, 58, 0.3) 0%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  animation: nas-liquidRefract 8s ease-in-out infinite;
+}
+
+@keyframes nas-liquidRefract {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(10px, 10px); }
+  100% { transform: translate(0, 0); }
+}
