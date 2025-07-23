@@ -1,7 +1,0 @@
-name = "jassy-hw"
-main = "workers-site"   
-compatibility_date = "2025-07-23"
-
-[site]
-bucket = "./jassy/dist"   
-entry-point = "workers-site" 
