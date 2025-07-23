@@ -1,6 +1,24 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as THREE from 'three';
+import {
+  WebGLRenderer,
+  Scene,
+  Color,
+  FogExp2,
+  PerspectiveCamera,
+  AmbientLight,
+  DirectionalLight,
+  PointLight,
+  PlaneGeometry,
+  MeshPhysicalMaterial,
+  CanvasTexture,
+  Mesh,
+  Vector3,
+  Raycaster,
+  Vector2,
+  SRGBColorSpace,
+  DoubleSide,
+} from 'three';
 import styled from 'styled-components';
 
 const Scene = () => {
@@ -14,23 +32,23 @@ const Scene = () => {
     if (!canvas || !titlesContainer) return;
 
     // Three.js setup
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000);
-    scene.fog = new THREE.FogExp2(0x000, 0.08);
+    const scene = new Scene();
+    scene.background = new Color(0x000);
+    scene.fog = new FogExp2(0x000, 0.08);
 
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    const camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.z = 5;
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 1);
+    const ambientLight = new AmbientLight(0x404040, 1);
     scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const directionalLight = new DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(0, 1, 1);
     scene.add(directionalLight);
-    const pointLight = new THREE.PointLight(0xffffff, 2, 10);
+    const pointLight = new PointLight(0xffffff, 2, 10);
     pointLight.position.set(0, 0, 2);
     scene.add(pointLight);
 
@@ -113,19 +131,19 @@ const Scene = () => {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.colorSpace = THREE.SRGBColorSpace;
+      const texture = new CanvasTexture(canvas);
+      texture.colorSpace = SRGBColorSpace;
       return texture;
     };
 
     // Create slides with text
     const createSlide = (index) => {
-      const geometry = new THREE.PlaneGeometry(slideWidth, slideHeight, 64, 32);
+      const geometry = new PlaneGeometry(slideWidth, slideHeight, 64, 32);
       const textIndex = index % textContents.length;
       const textInfo = textContents[textIndex];
-      const material = new THREE.MeshPhysicalMaterial({
+      const material = new MeshPhysicalMaterial({
         map: createTextTexture(textInfo.text),
-        side: THREE.DoubleSide,
+        side: DoubleSide,
         metalness: 0.2,
         roughness: 0.8,
         clearcoat: 0.4,
@@ -133,7 +151,7 @@ const Scene = () => {
         emissive: 0x000000,
         emissiveIntensity: 1.0,
       });
-      const mesh = new THREE.Mesh(geometry, material);
+      const mesh = new Mesh(geometry, material);
       mesh.position.x = index * (slideWidth + gap);
       mesh.userData = {
         originalVertices: [...geometry.attributes.position.array],
@@ -143,7 +161,7 @@ const Scene = () => {
         waveAmplitude: 1.0,
         wavePhase: Math.random() * Math.PI * 2,
         id: textInfo.id,
-        baseScale: new THREE.Vector3(1, 1, 1),
+        baseScale: new Vector3(1, 1, 1),
         baseLightIntensity: 2,
         targetScale: 1.0,
         currentScale: 1.0,
@@ -184,7 +202,7 @@ const Scene = () => {
     let peakVelocity = 0;
     let velocityHistory = [0, 0, 0, 0, 0];
     let lastDeltaX = 0;
-    let movementDirection = new THREE.Vector2(0, 0);
+    let movementDirection = new Vector2(0, 0);
     let lastMovementInput = 0;
     let accumulatedMovement = 0;
     let mouseDownTime = 0;
@@ -192,8 +210,8 @@ const Scene = () => {
     const clickThreshold = 5; // Pixels moved to consider a drag instead of a click
     const clickTimeThreshold = 300; // Milliseconds for click duration
 
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
+    const raycaster = new Raycaster();
+    const mouse = new Vector2();
     let hoveredSlide = null;
 
     const updateHoverEffect = (event) => {
@@ -385,7 +403,7 @@ const Scene = () => {
       titleElements.forEach((titleObj) => {
         const slide = slides[titleObj.index];
         const { element, offset } = titleObj;
-        const vector = new THREE.Vector3(slide.position.x, slide.position.y, slide.position.z);
+        const vector = new Vector3(slide.position.x, slide.position.y, slide.position.z);
         vector.project(camera);
         const screenX = (vector.x * 0.5 + 0.5) * window.innerWidth;
         const screenY = (-vector.y * 0.5 + 0.5) * window.innerHeight;
