@@ -6,6 +6,7 @@ import Particles from './components/Particles';
 import Scene from './components/Scene';
 import Footer from './components/Footer';
 import { GlobalStyles } from './styles';
+import './App.css'
 
 // Lazy-load heavy components
 const Network = React.lazy(() => import('./components/NetworkSimulator/Network'));
