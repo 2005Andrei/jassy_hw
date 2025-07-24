@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>DRAG TO EXPLORE</p>
+      <p style={{ color: "white" }}>DRAG TO EXPLORE. CLICK TO DISCOVER.</p>
     </FooterContainer>
   );
 };
