@@ -88,11 +88,11 @@ const Scene = () => {
     const slideUnit = slideWidth + gap;
 
     const textContents = [
-      { title: 'Password Hashing', text: '1', offset: { x: 0, y: -25 }, id: 'card1' },
-      { title: 'RSA Algo', text: '2', offset: { x: 0, y: 30 }, id: 'card2' },
-      { title: 'WireShark Sim', text: '3', offset: { x: 0, y: 20 }, id: 'card3' },
-      { title: 'IoT Scanner', text: '4', offset: { x: 0, y: -20 }, id: 'card4' },
-      { title: 'AI Misuses', text: '5', offset: { x: 0, y: -15 }, id: 'card5' },
+      { title: '', text: 'Password Hashing', offset: { x: -10, y: 35 }, id: 'card1' },
+      { title: '', text: 'RSA Algorithm', offset: { x: -20, y: 30 }, id: 'card2' },
+      { title: '', text: 'Wireshark Sim', offset: { x: -20, y: 30 }, id: 'card3' },
+      { title: '', text: 'IoT Scanner', offset: { x: -30, y: 25 }, id: 'card4' },
+      { title: '', text: 'AI Misuses', offset: { x: -25, y: 30 }, id: 'card5' },
     ];
 
     const slides = [];
